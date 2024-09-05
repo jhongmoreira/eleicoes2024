@@ -16,7 +16,6 @@
 
     <div id="candidates-container"></div>
 
-
     <script>
 
         function getDataCandidato(url) {
@@ -25,24 +24,30 @@
 
                 container.innerHTML = '';
 
+                data.carg.forEach(function (carg) {
+                    carg.agr.forEach(function (agr) {
+                        agr.par.forEach(function (par) {
+                            par.cand.forEach(function (candidate) {
 
-                data.carg[0].agr.forEach(function (obj, index) {
-                    var candidateDiv = document.createElement('div');
-                    candidateDiv.classList.add('candidate');
+                                var candidateDiv = document.createElement('div');
+                                candidateDiv.classList.add('candidate');
+                                candidateDiv.innerHTML = `
+                            <p><strong>Nome:</strong> ${candidate.nmu}</p>
+                            <p><strong>Número:</strong> ${candidate.n}</p>
+                            <p><strong>Votos:</strong> ${candidate.vap}</p>
+                            <p><strong>Percentual:</strong> ${candidate.pvap}</p>
+                            <hr>
+                        `;
+                                container.appendChild(candidateDiv);
 
-                candidateDiv.innerHTML = `
-                <h3>Candidato ${index + 1}</h3>
-                <p>Nome: ${obj.cands.nm}</p>
-                <p>Idade: ${obj.age}</p>
-            `;
-
-                    container.appendChild(candidateDiv);
+                            });
+                        });
+                    });
                 });
             });
         }
 
-        getDataCandidato('/mt99015-c0011-e010884-u.json');
-
+        getDataCandidato('https://eleicoesaovivo.com/fake-data/oficial/ele2024/10884/dados/mt/mt89877-c0013-e010884-u.json');
 
     </script>
 
