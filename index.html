@@ -36,11 +36,88 @@
             <hr>
         </div>
 
+        <div class="row">
+            <div class="col-md-4">
+                <select id="estado" class="form form-control">
+                    <option value="">Selecione um estado</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <select id="municipio" class="form form-control">
+                    <option value="">Selecione um município</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <button id="enviar" class="button btn-primary form-control">Enviar</button>
+            </div>
+
+        </div> 
+
         <div id="candidates-container" class="row p-5"></div>
+
     </div>
 
 
     <script>
+ // Função para carregar o JSON e popular os selects
+ async function carregarDados() {
+            try {
+                // Buscar o JSON da URL fornecida
+                const response = await fetch('https://eleicoesaovivo.com/municipios_tse.json');
+                const data = await response.json();
+                
+                // Extrair estados únicos
+                const estados = new Set(data.map(item => item.uf));
+                
+                // Popular o select de estados
+                const selectEstado = document.getElementById('estado');
+                estados.forEach(uf => {
+                    const option = document.createElement('option');
+                    option.value = uf.toLowerCase(); // Valor em letras minúsculas
+                    option.textContent = uf;
+                    selectEstado.appendChild(option);
+                });
+
+                // Adicionar evento de mudança ao select de estados
+                selectEstado.addEventListener('change', function () {
+                    const ufSelecionado = this.value;
+                    const municipiosFiltrados = data.filter(item => item.uf.toLowerCase() === ufSelecionado);
+
+                    // Popular o select de municípios
+                    const selectMunicipio = document.getElementById('municipio');
+                    selectMunicipio.innerHTML = '<option value="">Selecione um município</option>'; // Limpar municípios anteriores
+                    municipiosFiltrados.forEach(item => {
+                        const option = document.createElement('option');
+                        option.value = item.cod_municipio_tse; // Usar cod_municipio_tse
+                        option.textContent = item.municipio;
+                        selectMunicipio.appendChild(option);
+                    });
+                });
+
+                // Adicionar evento de clique ao botão de enviar
+                document.getElementById('enviar').addEventListener('click', function () {
+                    const estadoSelecionado = document.getElementById('estado').value;
+                    const municipioSelecionado = document.getElementById('municipio').value;
+
+                    if (estadoSelecionado && municipioSelecionado) {
+                        const url = new URL(window.location.href);
+                        url.searchParams.set('uf', estadoSelecionado);
+                        url.searchParams.set('municipio', municipioSelecionado);
+                        window.location.href = url.toString();
+                    } else {
+                        alert('Selecione um estado e um município.');
+                    }
+                });
+            } catch (error) {
+                console.error('Erro ao carregar os dados:', error);
+            }
+        }
+
+        // Chamar a função para carregar os dados quando a página for carregada
+        document.addEventListener('DOMContentLoaded', carregarDados);
+
 function getDataCandidato(url) {
     $.get(url, function (data) {
         var container = document.getElementById('candidates-container');
@@ -143,7 +220,6 @@ var sortByQtdVotos = function(obj1, obj2) {
     setInterval(() => getDataCandidato(url_municipio), 10000);
 
     </script>
-
 
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
