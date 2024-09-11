@@ -32,6 +32,7 @@
         <div class="row">
             <div class="col-md-12 text-center m-2">
                 <h1>Vereadores</h1>
+                <div id="ultima_atualizacao"></div>
             </div>
             <hr>
         </div>
@@ -61,6 +62,15 @@
 
 
     <script>
+
+
+function atualizarUltimaAtualizacao() {
+                    const spanUltimaAtualizacao = document.getElementById('ultima_atualizacao');
+                    const agora = new Date();
+                    const dataHora = "Atualizado ás " + agora.toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+                    spanUltimaAtualizacao.textContent = dataHora;
+                }
+
  // Função para carregar o JSON e popular os selects
  async function carregarDados() {
             try {
@@ -178,6 +188,9 @@ function getDataCandidato(url) {
                 </div>`;
             container.appendChild(candidateDiv);        
         });
+
+        atualizarUltimaAtualizacao();
+
     });
 
 }
