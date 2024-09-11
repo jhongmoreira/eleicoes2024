@@ -1,24 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
+<head><meta charset="utf-8">
+
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta http-equiv="refresh" content="10">
 
-    <title>Document</title>
+    <title>Eleições 2024 - Vereadores</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous">
-        </script>
+    </script>
+
+    <style>
+
+        .bg-provavel{
+            background-color: rgb(237, 251, 255) !important;
+        }
+
+        .bg-eleito{
+            background-color: rgb(202, 255, 202) !important;
+        }
+    </style>
 
 </head>
 
 <body>
 
-    <div class="container">
+    <div class="container m-2 mx-auto">
 
         <div class="row">
             <div class="col-md-12 text-center m-2">
@@ -27,12 +39,11 @@
             <hr>
         </div>
 
-        <div id="candidates-container" class="row"></div>
+        <div id="candidates-container" class="row p-5"></div>
     </div>
 
 
     <script>
-
 function getDataCandidato(url) {
     $.get(url, function (data) {
         var container = document.getElementById('candidates-container');
@@ -43,9 +54,34 @@ function getDataCandidato(url) {
 
         data.carg.forEach(function (carg) {
             carg.agr.forEach(function (agr) {
-                agr.par.forEach(function (par) {
+				sortCandidatos = candidatosSortByPartido(agr);
+                sortCandidatos.forEach(function (cand) {
                     // Adicionar todos os candidatos ao array
-                    allCandidates = allCandidates.concat(par.cand);
+					var posicaoNoPartido = sortCandidatos.indexOf(cand) + 1;
+					var qtdVagasPartido = parseInt(agr.vag);
+					var provavelEleito = ((posicaoNoPartido) <= qtdVagasPartido && qtdVagasPartido > 0);
+                    // Ajustando a atribuição de `eleito`
+                    var eleito = (cand.dvt == "Anulado" ? "Anulado" : 
+                                cand.e == "s" ? "Ganhou" : 
+                                provavelEleito ? "Provável" : "");
+
+                    // Atribuindo o valor de `eleito` ao objeto `cand`
+                    cand.eleito = eleito;
+
+                    // Definindo a classe de `bg` com base no valor de `cand.eleito`
+                    if (cand.eleito == 'Anulado') {
+                        cand.bg = 'badge bg-danger';
+                    } else if (cand.eleito == 'Ganhou') {
+                        cand.bg_sim = 'bg-eleito';
+                        cand.bg = 'badge bg-success';
+                    } else if (cand.eleito == 'Provável') {
+                        cand.bg_sim = 'bg-provavel';
+                        cand.bg = 'badge bg-primary';
+                    } else {
+                        cand.bg = 'badge bg-secondary'; // Classe padrão, caso não se encaixe em nenhum dos casos anteriores
+                    }
+
+                    allCandidates = allCandidates.concat(cand);
                 });
             });
         });
@@ -58,12 +94,13 @@ function getDataCandidato(url) {
         // Exibir os candidatos ordenados
         allCandidates.forEach(function (candidate) {
             var candidateDiv = document.createElement('div');
-            candidateDiv.classList.add('candidate', 'card', 'col-md-3', 'text-center');
+            candidateDiv.classList.add('candidate', 'col-md-3', 'text-center', 'border', candidate.bg_sim);
             candidateDiv.innerHTML = `
-                <img src="https://eleicoesaovivo.com/fake-data/oficial/ele2024/10884/fotos/mt/${candidate.sqcand}.jpeg" class="img-thumbnail rounded mx-auto d-block" style="width: 100px;">
+                <img src="https://eleicoesaovivo.com/fake-data/oficial/ele2024/10884/fotos/mt/${candidate.sqcand}.jpeg" class="img-thumbnail rounded mx-auto d-block m-3" style="width: 100px;">
                 <div class="card-body">
                     <h5 class="card-title">${candidate.nmu} - ${candidate.n}</h5>
                     <p class="card-text">${candidate.vap} - ${candidate.pvap}%</p>
+                    <span class="card-text ${candidate.bg}">${candidate.eleito}</span>
                 </div>
             `;
             container.appendChild(candidateDiv);
@@ -71,7 +108,43 @@ function getDataCandidato(url) {
     });
 }
 
-getDataCandidato('https://eleicoesaovivo.com/fake-data/oficial/ele2024/10884/dados/mt/mt89877-c0013-e010884-u.json');
+function candidatosSortByPartido(dataCandidatos){
+    var dataRetorno = [];
+
+    dataCandidatos.par.forEach(function(par, index){
+        if(par.cand.length > 0){
+            par.cand.forEach(function(cand, index){
+                dataRetorno.push(cand);
+            });
+        }
+    });
+
+    dataRetorno = dataRetorno.sort(sortByQtdVotos).reverse();
+
+    return dataRetorno;
+}
+
+var sortByQtdVotos = function(obj1, obj2) {
+    return parseInt(obj1.vap) - parseInt(obj2.vap);
+};
+
+    // Obter parametro municipio e salvar na URL
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams(url.search);
+    const uf = params.get('uf');
+    const municipio = params.get('municipio');
+
+    var url_municipio = municipio;
+
+    if (url_municipio == undefined){
+        url_municipio = 'https://eleicoesaovivo.com/fake-data/oficial/ele2024/10884/dados/mt/mt89877-c0013-e010884-u.json'
+    }else{
+        url_municipio = `https://eleicoesaovivo.com/fake-data/oficial/ele2024/10884/dados/${uf}/${uf}${municipio}-c0013-e010884-u.json`
+    }
+
+    console.log(url_municipio)
+
+    getDataCandidato(url_municipio);
 
     </script>
 
