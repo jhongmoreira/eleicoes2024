@@ -2,11 +2,8 @@
 <html lang="en">
 
 <head><meta charset="utf-8">
-
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta http-equiv="refresh" content="10">
 
     <title>Eleições 2024 - Vereadores</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -95,17 +92,17 @@ function getDataCandidato(url) {
         allCandidates.forEach(function (candidate) {
             var candidateDiv = document.createElement('div');
             candidateDiv.classList.add('candidate', 'col-md-3', 'text-center', 'border', candidate.bg_sim);
-            candidateDiv.innerHTML = `
-                <img src="https://eleicoesaovivo.com/fake-data/oficial/ele2024/10884/fotos/mt/${candidate.sqcand}.jpeg" class="img-thumbnail rounded mx-auto d-block m-3" style="width: 100px;">
+            candidateDiv.innerHTML = 
+            `<img src="https://eleicoesaovivo.com/fake-data/oficial/ele2024/10884/fotos/mt/${candidate.sqcand}.jpeg" class="img-thumbnail rounded mx-auto d-block m-3" style="width: 100px;">
                 <div class="card-body">
                     <h5 class="card-title">${candidate.nmu} - ${candidate.n}</h5>
                     <p class="card-text">${candidate.vap} - ${candidate.pvap}%</p>
                     <span class="card-text ${candidate.bg}">${candidate.eleito}</span>
-                </div>
-            `;
-            container.appendChild(candidateDiv);
+                </div>`;
+            container.appendChild(candidateDiv);        
         });
     });
+
 }
 
 function candidatosSortByPartido(dataCandidatos){
@@ -142,9 +139,8 @@ var sortByQtdVotos = function(obj1, obj2) {
         url_municipio = `https://eleicoesaovivo.com/fake-data/oficial/ele2024/10884/dados/${uf}/${uf}${municipio}-c0013-e010884-u.json`
     }
 
-    console.log(url_municipio)
-
     getDataCandidato(url_municipio);
+    setInterval(() => getDataCandidato(url_municipio), 10000);
 
     </script>
 
