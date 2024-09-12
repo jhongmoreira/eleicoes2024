@@ -120,9 +120,7 @@ async function carregarDados() {
             }
         });
 
-        // Lógica para encontrar e exibir o nome do município com base no parâmetro da URL
         const codMunicipioTseParametro = new URLSearchParams(window.location.search).get('municipio');
-        const codUfTseParametro = new URLSearchParams(window.location.search).get('uf');
 
         if (codMunicipioTseParametro) {
             const municipioEncontrado = data.find(municipio => municipio.cod_municipio_tse === codMunicipioTseParametro);
