@@ -31,7 +31,7 @@
 
         <div class="row">
             <div class="col-md-12 text-center m-2">
-                <h1>Vereadores</h1>
+                <h1 id="titulo">Vereadores</h1>
                 <div id="ultima_atualizacao">-</div>
             </div>
             <hr>
@@ -63,7 +63,6 @@
 
     <script>
 
-
 function atualizarUltimaAtualizacao() {
                     const spanUltimaAtualizacao = document.getElementById('ultima_atualizacao');
                     const agora = new Date();
@@ -71,59 +70,78 @@ function atualizarUltimaAtualizacao() {
                     spanUltimaAtualizacao.textContent = dataHora;
                 }
 
- // Função para carregar o JSON e popular os selects
- async function carregarDados() {
-            try {
-                // Buscar o JSON da URL fornecida
-                const response = await fetch('https://eleicoesaovivo.com/municipios_tse.json');
-                const data = await response.json();
-                
-                // Extrair estados únicos
-                const estados = new Set(data.map(item => item.uf));
-                
-                // Popular o select de estados
-                const selectEstado = document.getElementById('estado');
-                estados.forEach(uf => {
-                    const option = document.createElement('option');
-                    option.value = uf.toLowerCase(); // Valor em letras minúsculas
-                    option.textContent = uf;
-                    selectEstado.appendChild(option);
-                });
+// Função para carregar o JSON e popular os selects
+async function carregarDados() {
+    try {
+        // Buscar o JSON da URL fornecida
+        const response = await fetch('https://eleicoesaovivo.com/municipios_tse.json');
+        const data = await response.json();
+        
+        // Extrair estados únicos
+        const estados = new Set(data.map(item => item.uf));
+        
+        // Popular o select de estados
+        const selectEstado = document.getElementById('estado');
+        estados.forEach(uf => {
+            const option = document.createElement('option');
+            option.value = uf.toLowerCase(); // Valor em letras minúsculas
+            option.textContent = uf;
+            selectEstado.appendChild(option);
+        });
 
-                // Adicionar evento de mudança ao select de estados
-                selectEstado.addEventListener('change', function () {
-                    const ufSelecionado = this.value;
-                    const municipiosFiltrados = data.filter(item => item.uf.toLowerCase() === ufSelecionado);
+        // Adicionar evento de mudança ao select de estados
+        selectEstado.addEventListener('change', function () {
+            const ufSelecionado = this.value;
+            const municipiosFiltrados = data.filter(item => item.uf.toLowerCase() === ufSelecionado);
 
-                    // Popular o select de municípios
-                    const selectMunicipio = document.getElementById('municipio');
-                    selectMunicipio.innerHTML = '<option value="">Selecione um município</option>'; // Limpar municípios anteriores
-                    municipiosFiltrados.forEach(item => {
-                        const option = document.createElement('option');
-                        option.value = item.cod_municipio_tse; // Usar cod_municipio_tse
-                        option.textContent = item.municipio;
-                        selectMunicipio.appendChild(option);
-                    });
-                });
+            // Popular o select de municípios
+            const selectMunicipio = document.getElementById('municipio');
+            selectMunicipio.innerHTML = '<option value="">Selecione um município</option>'; // Limpar municípios anteriores
+            municipiosFiltrados.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.cod_municipio_tse; // Usar cod_municipio_tse
+                option.textContent = item.municipio;
+                selectMunicipio.appendChild(option);
+            });
+        });
 
-                // Adicionar evento de clique ao botão de enviar
-                document.getElementById('enviar').addEventListener('click', function () {
-                    const estadoSelecionado = document.getElementById('estado').value;
-                    const municipioSelecionado = document.getElementById('municipio').value;
+        // Adicionar evento de clique ao botão de enviar
+        document.getElementById('enviar').addEventListener('click', function () {
+            const estadoSelecionado = document.getElementById('estado').value;
+            const municipioSelecionado = document.getElementById('municipio').value;
 
-                    if (estadoSelecionado && municipioSelecionado) {
-                        const url = new URL(window.location.href);
-                        url.searchParams.set('uf', estadoSelecionado);
-                        url.searchParams.set('municipio', municipioSelecionado);
-                        window.location.href = url.toString();
-                    } else {
-                        alert('Selecione um estado e um município.');
-                    }
-                });
-            } catch (error) {
-                console.error('Erro ao carregar os dados:', error);
+            if (estadoSelecionado && municipioSelecionado) {
+                const url = new URL(window.location.href);
+                url.searchParams.set('uf', estadoSelecionado);
+                url.searchParams.set('municipio', municipioSelecionado);
+                window.location.href = url.toString();
+            } else {
+                alert('Selecione um estado e um município.');
             }
+        });
+
+        // Lógica para encontrar e exibir o nome do município com base no parâmetro da URL
+        const codMunicipioTseParametro = new URLSearchParams(window.location.search).get('municipio');
+        const codUfTseParametro = new URLSearchParams(window.location.search).get('uf');
+
+        if (codMunicipioTseParametro) {
+            const municipioEncontrado = data.find(municipio => municipio.cod_municipio_tse === codMunicipioTseParametro);
+            
+            if (municipioEncontrado) {
+                document.getElementById('titulo').textContent = `Vereadores em ${municipioEncontrado.municipio}`;
+                console.log(`Nome do município: ${municipioEncontrado.municipio}`);
+            } else {
+                console.log('Município não encontrado.');
+            }
+        } else {
+            console.log('Parâmetro "municipio" não encontrado na URL.');
         }
+
+    } catch (error) {
+        console.error('Erro ao carregar os dados:', error);
+    }
+}
+
 
         // Chamar a função para carregar os dados quando a página for carregada
         document.addEventListener('DOMContentLoaded', carregarDados);
