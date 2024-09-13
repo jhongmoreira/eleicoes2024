@@ -85,7 +85,7 @@
 
     <div class="container mx-auto">
 
-        <div class="row p-2 mt-3">
+        <div class="row p-2 mt-5 mb-5">
             <div class="col-md-12 text-center">
                 <h5 id="titulo"></h5>
                 <div style="display: inline-block;"><span class="blob green"></span><span id="ultima_atualizacao">-</span></div>            
@@ -116,8 +116,22 @@
             </div>
           </div>
 
+          
+          <div class="row mt-3">
+            <div class="col-md-12">
+                <h5>Prefeito</h5>
+            </div>
+          </div>
+          <div id="prefeito-container" class="row p-3"></div>
 
-        <div id="candidates-container" class="row p-3"></div>
+          <hr>
+          
+          <div class="row">
+            <div class="col-md-12">
+                <h5>Vereador</h5>
+            </div>
+          </div>
+          <div id="candidates-container" class="row p-3"></div>
 
     </div>
 
@@ -189,7 +203,7 @@ async function carregarDados() {
             const ufTexto = data.find(municipio => municipio.cod_municipio_tse === codMunicipioTseParametro);
             
             if (municipioEncontrado) {
-                document.getElementById('titulo').textContent = `Vereadores em ${municipioEncontrado.municipio}, ${ufParametro.toUpperCase()}`;
+                document.getElementById('titulo').textContent = `${municipioEncontrado.municipio}, ${ufParametro.toUpperCase()}`;
             } else {
                 console.log('Município não encontrado.');
             }
@@ -203,12 +217,79 @@ async function carregarDados() {
 }
 
 
-        // Chamar a função para carregar os dados quando a página for carregada
-        document.addEventListener('DOMContentLoaded', carregarDados);
+// Chamar a função para carregar os dados quando a página for carregada
+document.addEventListener('DOMContentLoaded', carregarDados);
 
 function getDataCandidato(url) {
     $.get(url, function (data) {
         var container = document.getElementById('candidates-container');
+        container.innerHTML = '';
+
+        // Array para armazenar todos os candidatos
+        var allCandidates = [];
+
+        data.carg.forEach(function (carg) {
+            carg.agr.forEach(function (agr) {
+				sortCandidatos = candidatosSortByPartido(agr);
+                sortCandidatos.forEach(function (cand) {
+                    // Adicionar todos os candidatos ao array
+					var posicaoNoPartido = sortCandidatos.indexOf(cand) + 1;
+					var qtdVagasPartido = parseInt(agr.vag);
+					var provavelEleito = ((posicaoNoPartido) <= qtdVagasPartido && qtdVagasPartido > 0);
+                    // Ajustando a atribuição de `eleito`
+                    var eleito = (cand.dvt == "Anulado" ? "Anulado" : 
+                                cand.e == "s" ? "Ganhou" : 
+                                provavelEleito ? "Provável" : "");
+
+                    // Atribuindo o valor de `eleito` ao objeto `cand`
+                    cand.eleito = eleito;
+
+                    // Definindo a classe de `bg` com base no valor de `cand.eleito`
+                    if (cand.eleito == 'Anulado') {
+                        cand.bg = 'badge bg-danger';
+                    } else if (cand.eleito == 'Ganhou') {
+                        cand.bg_sim = 'bg-eleito';
+                        cand.bg = 'badge bg-success';
+                    } else if (cand.eleito == 'Provável') {
+                        cand.bg_sim = 'bg-provavel';
+                        cand.bg = 'badge bg-primary';
+                    } else {
+                        cand.bg = 'badge bg-secondary'; // Classe padrão, caso não se encaixe em nenhum dos casos anteriores
+                    }
+
+                    allCandidates = allCandidates.concat(cand);
+                });
+            });
+        });
+
+        // Ordenar os candidatos pelo valor de 'vap' em ordem decrescente
+        allCandidates.sort(function (a, b) {
+            return b.vap - a.vap;
+        });
+
+        // Exibir os candidatos ordenados
+        allCandidates.forEach(function (candidate) {
+            var candidateDiv = document.createElement('div');
+            candidateDiv.classList.add('candidate', 'col-md-3', 'text-center', 'border', candidate.bg_sim);
+            candidateDiv.innerHTML = 
+            `<img src="https://eleicoesaovivo.com/fake-data/oficial/ele2024/10884/fotos/mt/${candidate.sqcand}.jpeg" class="img-thumbnail rounded mx-auto d-block m-3" style="width: 100px;">
+                <div class="card-body">
+                    <h5 class="card-title">${candidate.nmu} - ${candidate.n}</h5>
+                    <p class="card-text">${candidate.vap} - ${candidate.pvap}%</p>
+                    <span class="card-text ${candidate.bg}">${candidate.eleito}</span>
+                </div>`;
+            container.appendChild(candidateDiv);        
+        });
+
+        atualizarUltimaAtualizacao();
+
+    });
+
+}
+
+function getDataPrefeito(url) {
+    $.get(url, function (data) {
+        var container = document.getElementById('prefeito-container');
         container.innerHTML = '';
 
         // Array para armazenar todos os candidatos
@@ -303,19 +384,24 @@ var sortByQtdVotos = function(obj1, obj2) {
 
     if (url_municipio == undefined){
         url_municipio = 'https://eleicoesaovivo.com/fake-data/oficial/ele2024/10884/dados/mt/mt89877-c0013-e010884-u.json'
+        url_municipio_prefeito = 'https://eleicoesaovivo.com/fake-data/oficial/ele2024/10884/dados/mt/mt89877-c0011-e010884-u.json'
     }else{
         url_municipio = `https://eleicoesaovivo.com/fake-data/oficial/ele2024/10884/dados/${uf}/${uf}${municipio}-c0013-e010884-u.json`
+        url_municipio_prefeito = `https://eleicoesaovivo.com/fake-data/oficial/ele2024/10884/dados/${uf}/${uf}${municipio}-c0011-e010884-u.json`
     }
 
     getDataCandidato(url_municipio);
+    getDataPrefeito(url_municipio_prefeito);
+    
+    setInterval(() => getDataPrefeito(url_municipio_prefeito), 10000);
     setInterval(() => getDataCandidato(url_municipio), 10000);
-
+    
     </script>
 
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous">
-        </script>
+    </script>
 </body>
 
 </html>
