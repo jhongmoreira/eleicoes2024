@@ -138,13 +138,6 @@
 
     <script>
 
-    // Obter parametro municipio e salvar na URL
-    const url = new URL(window.location.href);
-    const params = new URLSearchParams(url.search);
-    const uf = params.get('uf');
-    const municipio = params.get('municipio');
-    var url_municipio = municipio;
-
 function atualizarUltimaAtualizacao() {
                     const spanUltimaAtualizacao = document.getElementById('ultima_atualizacao');
                     const agora = new Date();
@@ -279,7 +272,7 @@ function getDataCandidato(url) {
             var candidateDiv = document.createElement('div');
             candidateDiv.classList.add('candidate', 'col-md-3', 'text-center', 'border', candidate.bg_sim);
             candidateDiv.innerHTML = 
-            `<img src="https://resultados-sim.tse.jus.br/simulado/ele2024/10143/fotos/${uf}/${candidate.sqcand}.jpeg" class="img-thumbnail rounded mx-auto d-block m-3" style="width: 100px;">
+            `<img src="https://eleicoesaovivo.com/fake-data/oficial/ele2024/10884/fotos/mt/${candidate.sqcand}.jpeg" class="img-thumbnail rounded mx-auto d-block m-3" style="width: 100px;">
                 <div class="card-body">
                     <h5 class="card-title">${candidate.nmu} - ${candidate.n}</h5>
                     <p class="card-text">${candidate.vap} - ${candidate.pvap}%</p>
@@ -346,7 +339,7 @@ function getDataPrefeito(url) {
             var candidateDiv = document.createElement('div');
             candidateDiv.classList.add('candidate', 'col-md-3', 'text-center', 'border', candidate.bg_sim);
             candidateDiv.innerHTML = 
-            `<img src="https://resultados-sim.tse.jus.br/simulado/ele2024/10143/fotos/${uf}/${candidate.sqcand}.jpeg" class="img-thumbnail rounded mx-auto d-block m-3" style="width: 100px;">
+            `<img src="https://eleicoesaovivo.com/fake-data/oficial/ele2024/10884/fotos/mt/${candidate.sqcand}.jpeg" class="img-thumbnail rounded mx-auto d-block m-3" style="width: 100px;">
                 <div class="card-body">
                     <h5 class="card-title">${candidate.nmu} - ${candidate.n}</h5>
                     <p class="card-text">${candidate.vap} - ${candidate.pvap}%</p>
@@ -381,26 +374,27 @@ var sortByQtdVotos = function(obj1, obj2) {
     return parseInt(obj1.vap) - parseInt(obj2.vap);
 };
 
-    // // Obter parametro municipio e salvar na URL
-    // const url = new URL(window.location.href);
-    // const params = new URLSearchParams(url.search);
-    // const uf = params.get('uf');
-    // const municipio = params.get('municipio');
-    // var url_municipio = municipio;
+    // Obter parametro municipio e salvar na URL
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams(url.search);
+    const uf = params.get('uf');
+    const municipio = params.get('municipio');
+
+    var url_municipio = municipio;
 
     if (url_municipio == undefined){
-        url_municipio = 'https://resultados-sim.tse.jus.br/simulado/ele2024/10143/dados/sp/sp71072-c0013-e010143-u.json'
-        url_municipio_prefeito = 'https://resultados-sim.tse.jus.br/simulado/ele2024/10143/dados/sp/sp71072-c0011-e010143-u.json'
+        url_municipio = 'https://eleicoesaovivo.com/fake-data/oficial/ele2024/10884/dados/mt/mt89877-c0013-e010884-u.json'
+        url_municipio_prefeito = 'https://eleicoesaovivo.com/fake-data/oficial/ele2024/10884/dados/mt/mt89877-c0011-e010884-u.json'
     }else{
-        url_municipio = `https://resultados-sim.tse.jus.br/simulado/ele2024/10143/dados/${uf}/${uf}${municipio}-c0013-e010143-u.json`
-        url_municipio_prefeito = `https://resultados-sim.tse.jus.br/simulado/ele2024/10143/dados/${uf}/${uf}${municipio}-c0011-e010143-u.json`
+        url_municipio = `https://eleicoesaovivo.com/fake-data/oficial/ele2024/10884/dados/${uf}/${uf}${municipio}-c0013-e010884-u.json`
+        url_municipio_prefeito = `https://eleicoesaovivo.com/fake-data/oficial/ele2024/10884/dados/${uf}/${uf}${municipio}-c0011-e010884-u.json`
     }
 
     getDataCandidato(url_municipio);
     getDataPrefeito(url_municipio_prefeito);
     
-    setInterval(() => getDataPrefeito(url_municipio_prefeito), 30000);
-    setInterval(() => getDataCandidato(url_municipio), 30000);
+    setInterval(() => getDataPrefeito(url_municipio_prefeito), 10000);
+    setInterval(() => getDataCandidato(url_municipio), 10000);
     
     </script>
 
