@@ -1,0 +1,12 @@
+    if (url_municipio == undefined){
+        url_municipio_prefeito = 'https://resultados.tse.jus.br/oficial/ele2024/620/dados/mg/mg52418-c0011-e000619-u.json'
+        // url_municipio_prefeito = 'https://resultados.tse.jus.br/oficial/ele2024/619/dados/mg/mg52418-c0011-e000619-u.json'        
+    }else{
+        url_municipio_prefeito = `https://resultados.tse.jus.br/oficial/ele2024/620/dados/${uf}/${uf}${municipio}-c0011-e000619-u.json`
+        // url_municipio_prefeito = `https://resultados.tse.jus.br/oficial/ele2024/619/dados/${uf}/${uf}${municipio}-c0011-e000619-u.json`
+    }
+
+
+    getDataPrefeito(url_municipio_prefeito);
+    
+    setInterval(() => getDataPrefeito(url_municipio_prefeito), 30000);
