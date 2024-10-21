@@ -67,7 +67,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">ELEIÇÕES 2024</a>
+          <a class="navbar-brand" href="#">ELEIÇÕES 2024 - 2º TURNO</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -124,19 +124,12 @@
           </div>
           <div id="prefeito-container" class="row p-3"></div>
 
-          <hr>
-          
-          <div class="row">
-            <div class="col-md-12">
-                <h5>Vereador</h5>
-            </div>
-          </div>
-          <div id="candidates-container" class="row p-3"></div>
-
     </div>
 
 
     <script>
+    
+    
 
     // Obter parametro municipio e salvar na URL
     const url = new URL(window.location.href);
@@ -156,11 +149,11 @@ function atualizarUltimaAtualizacao() {
 async function carregarDados() {
     try {
         // Buscar o JSON da URL fornecida
-        const response = await fetch('https://eleicoesaovivo.com/municipios_tse.json');
+        const response = await fetch('m.json');
         const data = await response.json();
         
-        // Extrair estados únicos
-        const estados = new Set(data.map(item => item.uf));
+        // Extrair estados únicos e ordenar
+        const estados = Array.from(new Set(data.map(item => item.uf))).sort();
         
         // Popular o select de estados
         const selectEstado = document.getElementById('estado');
@@ -186,6 +179,7 @@ async function carregarDados() {
                 selectMunicipio.appendChild(option);
             });
         });
+        
 
         // Adicionar evento de clique ao botão de enviar
         document.getElementById('enviar').addEventListener('click', function () {
@@ -195,7 +189,7 @@ async function carregarDados() {
             if (estadoSelecionado && municipioSelecionado) {
                 const url = new URL(window.location.href);
                 url.searchParams.set('uf', estadoSelecionado);
-                url.searchParams.set('municipio', municipioSelecionado);
+                url.searchParams.set('municipio', municipioSelecionado.padStart(5, '0'));
                 window.location.href = url.toString();
             } else {
                 alert('Selecione um estado e um município.');
@@ -226,73 +220,6 @@ async function carregarDados() {
 
 // Chamar a função para carregar os dados quando a página for carregada
 document.addEventListener('DOMContentLoaded', carregarDados);
-
-function getDataCandidato(url) {
-    $.get(url, function (data) {
-        var container = document.getElementById('candidates-container');
-        container.innerHTML = '';
-
-        // Array para armazenar todos os candidatos
-        var allCandidates = [];
-
-        data.carg.forEach(function (carg) {
-            carg.agr.forEach(function (agr) {
-				sortCandidatos = candidatosSortByPartido(agr);
-                sortCandidatos.forEach(function (cand) {
-                    // Adicionar todos os candidatos ao array
-					var posicaoNoPartido = sortCandidatos.indexOf(cand) + 1;
-					var qtdVagasPartido = parseInt(agr.vag);
-					var provavelEleito = ((posicaoNoPartido) <= qtdVagasPartido && qtdVagasPartido > 0);
-                    // Ajustando a atribuição de `eleito`
-                    var eleito = (cand.dvt == "Anulado" ? "Anulado" : 
-                                cand.e == "s" ? "Ganhou" : 
-                                provavelEleito ? "Provável" : "");
-
-                    // Atribuindo o valor de `eleito` ao objeto `cand`
-                    cand.eleito = eleito;
-
-                    // Definindo a classe de `bg` com base no valor de `cand.eleito`
-                    if (cand.eleito == 'Anulado') {
-                        cand.bg = 'badge bg-danger';
-                    } else if (cand.eleito == 'Ganhou') {
-                        cand.bg_sim = 'bg-eleito';
-                        cand.bg = 'badge bg-success';
-                    } else if (cand.eleito == 'Provável') {
-                        cand.bg_sim = 'bg-provavel';
-                        cand.bg = 'badge bg-primary';
-                    } else {
-                        cand.bg = 'badge bg-secondary'; // Classe padrão, caso não se encaixe em nenhum dos casos anteriores
-                    }
-
-                    allCandidates = allCandidates.concat(cand);
-                });
-            });
-        });
-
-        // Ordenar os candidatos pelo valor de 'vap' em ordem decrescente
-        allCandidates.sort(function (a, b) {
-            return b.vap - a.vap;
-        });
-
-        // Exibir os candidatos ordenados
-        allCandidates.forEach(function (candidate) {
-            var candidateDiv = document.createElement('div');
-            candidateDiv.classList.add('candidate', 'col-md-3', 'text-center', 'border', candidate.bg_sim);
-            candidateDiv.innerHTML = 
-            `<img src="https://resultados-sim.tse.jus.br/simulado/ele2024/10143/fotos/${uf}/${candidate.sqcand}.jpeg" class="img-thumbnail rounded mx-auto d-block m-3" style="width: 100px;">
-                <div class="card-body">
-                    <h5 class="card-title">${candidate.nmu} - ${candidate.n}</h5>
-                    <p class="card-text">${candidate.vap} - ${candidate.pvap}%</p>
-                    <span class="card-text ${candidate.bg}">${candidate.eleito}</span>
-                </div>`;
-            container.appendChild(candidateDiv);        
-        });
-
-        atualizarUltimaAtualizacao();
-
-    });
-
-}
 
 function getDataPrefeito(url) {
     $.get(url, function (data) {
@@ -346,11 +273,12 @@ function getDataPrefeito(url) {
             var candidateDiv = document.createElement('div');
             candidateDiv.classList.add('candidate', 'col-md-3', 'text-center', 'border', candidate.bg_sim);
             candidateDiv.innerHTML = 
-            `<img src="https://resultados-sim.tse.jus.br/simulado/ele2024/10143/fotos/${uf}/${candidate.sqcand}.jpeg" class="img-thumbnail rounded mx-auto d-block m-3" style="width: 100px;">
+            `<img src="https://resultados.tse.jus.br/oficial/ele2024/619/fotos/${uf}/${candidate.sqcand}.jpeg" class="img-thumbnail rounded mx-auto d-block m-3" style="width: 100px;">
                 <div class="card-body">
                     <h5 class="card-title">${candidate.nmu} - ${candidate.n}</h5>
                     <p class="card-text">${candidate.vap} - ${candidate.pvap}%</p>
                     <span class="card-text ${candidate.bg}">${candidate.eleito}</span>
+                    <progress value="${ parseFloat(candidate.pvap) }" max="100"> ${candidate.pvap}% </progress>
                 </div>`;
             container.appendChild(candidateDiv);        
         });
@@ -381,26 +309,17 @@ var sortByQtdVotos = function(obj1, obj2) {
     return parseInt(obj1.vap) - parseInt(obj2.vap);
 };
 
-    // // Obter parametro municipio e salvar na URL
-    // const url = new URL(window.location.href);
-    // const params = new URLSearchParams(url.search);
-    // const uf = params.get('uf');
-    // const municipio = params.get('municipio');
-    // var url_municipio = municipio;
-
     if (url_municipio == undefined){
-        url_municipio = 'https://resultados-sim.tse.jus.br/simulado/ele2024/10143/dados/sp/sp71072-c0013-e010143-u.json'
-        url_municipio_prefeito = 'https://resultados-sim.tse.jus.br/simulado/ele2024/10143/dados/sp/sp71072-c0011-e010143-u.json'
+        window.location.replace("index.html?uf=sp&municipio=71072");
+        // url_municipio_prefeito = 'https://resultados.tse.jus.br/oficial/ele2024/620/dados/sp/sp71072-c0011-e000620-u.json'
     }else{
-        url_municipio = `https://resultados-sim.tse.jus.br/simulado/ele2024/10143/dados/${uf}/${uf}${municipio}-c0013-e010143-u.json`
-        url_municipio_prefeito = `https://resultados-sim.tse.jus.br/simulado/ele2024/10143/dados/${uf}/${uf}${municipio}-c0011-e010143-u.json`
+        url_municipio_prefeito = `https://resultados.tse.jus.br/oficial/ele2024/620/dados/${uf}/${uf}${municipio}-c0011-e000620-u.json`
     }
 
-    getDataCandidato(url_municipio);
+
     getDataPrefeito(url_municipio_prefeito);
     
     setInterval(() => getDataPrefeito(url_municipio_prefeito), 30000);
-    setInterval(() => getDataCandidato(url_municipio), 30000);
     
     </script>
 
