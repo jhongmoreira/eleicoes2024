@@ -93,7 +93,7 @@
         </div>
 
 
-          <div class="collapse" id="collapseTrocar">
+          <div class="collapse mb-5" id="collapseTrocar">
             <div class="card card-body">
                 <div class="row">
                     <div class="col-md-4 p-1">
@@ -116,13 +116,21 @@
             </div>
           </div>
 
+          <div class="row mb-4">
+            <div class="col-md-12 text-center">
+                <p id="pst-texto"></p>
+                <div id="pst" class="col-md-12"></div>
+            </div>
+          </div>
           
           <div class="row mt-3">
             <div class="col-md-12">
                 <h5>Prefeito</h5>
-                <h5 id="pst"></h5>
+                <h5 ></h5>
             </div>
           </div>
+
+
           <div id="prefeito-container" class="row p-3"></div>
 
     </div>
@@ -228,7 +236,10 @@ function getDataPrefeito(url) {
         container.innerHTML = '';
 
         var percentual = document.getElementById('pst')
-        percentual.innerHTML = data.s.pst + "%";
+        percentual.innerHTML = `<progress class="col-md-12" value="${ parseFloat(data.s.pst) }" max="100"> ${data.s.pst}% </progress>`
+
+        var pstTexto = document.getElementById('pst-texto')
+        pstTexto.innerHTML = data.s.pst+"% de urnas apuradas"
 
         // Array para armazenar todos os candidatos
         var allCandidates = [];
