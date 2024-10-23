@@ -120,6 +120,7 @@
           <div class="row mt-3">
             <div class="col-md-12">
                 <h5>Prefeito</h5>
+                <h5 id="pst"></h5>
             </div>
           </div>
           <div id="prefeito-container" class="row p-3"></div>
@@ -225,6 +226,9 @@ function getDataPrefeito(url) {
     $.get(url, function (data) {
         var container = document.getElementById('prefeito-container');
         container.innerHTML = '';
+
+        var percentual = document.getElementById('pst')
+        percentual.innerHTML = data.s.pst + "%";
 
         // Array para armazenar todos os candidatos
         var allCandidates = [];
