@@ -1,0 +1,418 @@
+[
+    {
+        "uf": "RO",
+        "cod_uf": "11",
+        "cod_municipio": "00205",
+        "municipio": "Porto Velho",
+        "populacao": "548.952(1)",
+        "cod_municipio_tse": "35"
+    },
+    {
+        "uf": "GO",
+        "cod_uf": "52",
+        "cod_municipio": "01108",
+        "municipio": "Anápolis",
+        "populacao": "396,526",
+        "cod_municipio_tse": "92215"
+    },
+    {
+        "uf": "GO",
+        "cod_uf": "52",
+        "cod_municipio": "01405",
+        "municipio": "Aparecida de Goiânia",
+        "populacao": "601,844",
+        "cod_municipio_tse": "92274"
+    },
+    {
+        "uf": "SE",
+        "cod_uf": "28",
+        "cod_municipio": "00308",
+        "municipio": "Aracaju",
+        "populacao": "672,614",
+        "cod_municipio_tse": "31054"
+    },
+    {
+        "uf": "SP",
+        "cod_uf": "35",
+        "cod_municipio": "05708",
+        "municipio": "Barueri",
+        "populacao": "279,704",
+        "cod_municipio_tse": "62138"
+    },
+    {
+        "uf": "PA",
+        "cod_uf": "15",
+        "cod_municipio": "01402",
+        "municipio": "Belém",
+        "populacao": "1,506,420",
+        "cod_municipio_tse": "27154"
+    },
+    {
+        "uf": "MG",
+        "cod_uf": "31",
+        "cod_municipio": "06200",
+        "municipio": "Belo Horizonte",
+        "populacao": "2,530,701",
+        "cod_municipio_tse": "41238"
+    },
+    {
+        "uf": "BA",
+        "cod_uf": "29",
+        "cod_municipio": "05701",
+        "municipio": "Camaçari",
+        "populacao": "309,208",
+        "cod_municipio_tse": "34134"
+    },
+    {
+        "uf": "PB",
+        "cod_uf": "25",
+        "cod_municipio": "04009",
+        "municipio": "Campina Grande",
+        "populacao": "413,830",
+        "cod_municipio_tse": "19810"
+    },
+    {
+        "uf": "MS",
+        "cod_uf": "50",
+        "cod_municipio": "02704",
+        "municipio": "Campo Grande",
+        "populacao": "916,001",
+        "cod_municipio_tse": "27294"
+    },
+    {
+        "uf": "RS",
+        "cod_uf": "43",
+        "cod_municipio": "04606",
+        "municipio": "Canoas",
+        "populacao": "349,728",
+        "cod_municipio_tse": "85898"
+    },
+    {
+        "uf": "CE",
+        "cod_uf": "23",
+        "cod_municipio": "03709",
+        "municipio": "Caucaia",
+        "populacao": "368,918",
+        "cod_municipio_tse": "13730"
+    },
+    {
+        "uf": "RS",
+        "cod_uf": "43",
+        "cod_municipio": "05108",
+        "municipio": "Caxias do Sul",
+        "populacao": "523,716",
+        "cod_municipio_tse": "85995"
+    },
+    {
+        "uf": "MT",
+        "cod_uf": "51",
+        "cod_municipio": "03403",
+        "municipio": "Cuiabá",
+        "populacao": "623,614",
+        "cod_municipio_tse": "90670"
+    },
+    {
+        "uf": "PR",
+        "cod_uf": "41",
+        "cod_municipio": "06902",
+        "municipio": "Curitiba",
+        "populacao": "1,963,726",
+        "cod_municipio_tse": "75353"
+    },
+    {
+        "uf": "SP",
+        "cod_uf": "35",
+        "cod_municipio": "13801",
+        "municipio": "Diadema",
+        "populacao": "429,550",
+        "cod_municipio_tse": "63770"
+    },
+    {
+        "uf": "CE",
+        "cod_uf": "23",
+        "cod_municipio": "04400",
+        "municipio": "Fortaleza",
+        "populacao": "2,703,391",
+        "cod_municipio_tse": "13897"
+    },
+    {
+        "uf": "SP",
+        "cod_uf": "35",
+        "cod_municipio": "16200",
+        "municipio": "Franca",
+        "populacao": "358,539",
+        "cod_municipio_tse": "64254"
+    },
+    {
+        "uf": "GO",
+        "cod_uf": "52",
+        "cod_municipio": "08707",
+        "municipio": "Goiânia",
+        "populacao": "1,555,626",
+        "cod_municipio_tse": "93734"
+    },
+    {
+        "uf": "SP",
+        "cod_uf": "35",
+        "cod_municipio": "18701",
+        "municipio": "Guarujá",
+        "populacao": "324,977",
+        "cod_municipio_tse": "64750"
+    },
+    {
+        "uf": "SP",
+        "cod_uf": "35",
+        "cod_municipio": "18800",
+        "municipio": "Guarulhos",
+        "populacao": "1,404,694",
+        "cod_municipio_tse": "64777"
+    },
+    {
+        "uf": "MA",
+        "cod_uf": "21",
+        "cod_municipio": "05302",
+        "municipio": "Imperatriz",
+        "populacao": "259,980",
+        "cod_municipio_tse": "8036"
+    },
+    {
+        "uf": "PB",
+        "cod_uf": "25",
+        "cod_municipio": "07507",
+        "municipio": "João Pessoa",
+        "populacao": "825,796",
+        "cod_municipio_tse": "20516"
+    },
+    {
+        "uf": "SP",
+        "cod_uf": "35",
+        "cod_municipio": "25904",
+        "municipio": "Jundiaí",
+        "populacao": "426,935",
+        "cod_municipio_tse": "66192"
+    },
+    {
+        "uf": "SP",
+        "cod_uf": "35",
+        "cod_municipio": "26902",
+        "municipio": "Limeira",
+        "populacao": "310,783",
+        "cod_municipio_tse": "66397"
+    },
+    {
+        "uf": "PR",
+        "cod_uf": "41",
+        "cod_municipio": "13700",
+        "municipio": "Londrina",
+        "populacao": "580,870",
+        "cod_municipio_tse": "76678"
+    },
+    {
+        "uf": "AM",
+        "cod_uf": "13",
+        "cod_municipio": "02603",
+        "municipio": "Manaus",
+        "populacao": "2,255,903",
+        "cod_municipio_tse": "2550"
+    },
+    {
+        "uf": "SP",
+        "cod_uf": "35",
+        "cod_municipio": "29401",
+        "municipio": "Mauá",
+        "populacao": "481,725",
+        "cod_municipio_tse": "66893"
+    },
+    {
+        "uf": "RN",
+        "cod_uf": "24",
+        "cod_municipio": "08102",
+        "municipio": "Natal",
+        "populacao": "896,708",
+        "cod_municipio_tse": "17612"
+    },
+    {
+        "uf": "RJ",
+        "cod_uf": "33",
+        "cod_municipio": "03302",
+        "municipio": "Niterói",
+        "populacao": "516,981",
+        "cod_municipio_tse": "58653"
+    },
+    {
+        "uf": "PE",
+        "cod_uf": "26",
+        "cod_municipio": "09600",
+        "municipio": "Olinda",
+        "populacao": "393,734",
+        "cod_municipio_tse": "24910"
+    },
+    {
+        "uf": "TO",
+        "cod_uf": "17",
+        "cod_municipio": "21000",
+        "municipio": "Palmas",
+        "populacao": "313,349",
+        "cod_municipio_tse": "77330"
+    },
+    {
+        "uf": "PE",
+        "cod_uf": "26",
+        "cod_municipio": "10707",
+        "municipio": "Paulista",
+        "populacao": "336,919",
+        "cod_municipio_tse": "21199"
+    },
+    {
+        "uf": "RS",
+        "cod_uf": "43",
+        "cod_municipio": "14407",
+        "municipio": "Pelotas",
+        "populacao": "343,826",
+        "cod_municipio_tse": "87912"
+    },
+    {
+        "uf": "RJ",
+        "cod_uf": "33",
+        "cod_municipio": "03906",
+        "municipio": "Petrópolis",
+        "populacao": "307,144",
+        "cod_municipio_tse": "58777"
+    },
+    {
+        "uf": "SP",
+        "cod_uf": "35",
+        "cod_municipio": "38709",
+        "municipio": "Piracicaba",
+        "populacao": "410,275",
+        "cod_municipio_tse": "68756"
+    },
+    {
+        "uf": "PR",
+        "cod_uf": "41",
+        "cod_municipio": "19905",
+        "municipio": "Ponta Grossa",
+        "populacao": "358,838",
+        "cod_municipio_tse": "77771"
+    },
+    {
+        "uf": "RS",
+        "cod_uf": "43",
+        "cod_municipio": "14902",
+        "municipio": "Porto Alegre",
+        "populacao": "1,492,530",
+        "cod_municipio_tse": "88013"
+    },
+    {
+        "uf": "RO",
+        "cod_uf": "11",
+        "cod_municipio": "00205",
+        "municipio": "Porto Velho",
+        "populacao": "548.952(1)",
+        "cod_municipio_tse": "35"
+    },
+    {
+        "uf": "SP",
+        "cod_uf": "35",
+        "cod_municipio": "43402",
+        "municipio": "Ribeirão Preto",
+        "populacao": "720,116",
+        "cod_municipio_tse": "69698"
+    },
+    {
+        "uf": "RS",
+        "cod_uf": "43",
+        "cod_municipio": "16907",
+        "municipio": "Santa Maria",
+        "populacao": "285,159",
+        "cod_municipio_tse": "16241"
+    },
+    {
+        "uf": "PA",
+        "cod_uf": "15",
+        "cod_municipio": "06807",
+        "municipio": "Santarém",
+        "populacao": "308,339",
+        "cod_municipio_tse": "5355"
+    },
+    {
+        "uf": "SP",
+        "cod_uf": "35",
+        "cod_municipio": "48500",
+        "municipio": "Santos",
+        "populacao": "433,991",
+        "cod_municipio_tse": "70718"
+    },
+    {
+        "uf": "SP",
+        "cod_uf": "35",
+        "cod_municipio": "48708",
+        "municipio": "São Bernardo do Campo",
+        "populacao": "849,874",
+        "cod_municipio_tse": "70750"
+    },
+    {
+        "uf": "SP",
+        "cod_uf": "35",
+        "cod_municipio": "49805",
+        "municipio": "São José do Rio Preto",
+        "populacao": "469,173",
+        "cod_municipio_tse": "70971"
+    },
+    {
+        "uf": "SP",
+        "cod_uf": "35",
+        "cod_municipio": "49904",
+        "municipio": "São José dos Campos",
+        "populacao": "737,310",
+        "cod_municipio_tse": "70998"
+    },
+    {
+        "uf": "SP",
+        "cod_uf": "35",
+        "cod_municipio": "50308",
+        "municipio": "São Paulo",
+        "populacao": "12,396,372",
+        "cod_municipio_tse": "71072"
+    },
+    {
+        "uf": "ES",
+        "cod_uf": "32",
+        "cod_municipio": "05002",
+        "municipio": "Serra",
+        "populacao": "536,765",
+        "cod_municipio_tse": "56995"
+    },
+    {
+        "uf": "SP",
+        "cod_uf": "35",
+        "cod_municipio": "52403",
+        "municipio": "Sumaré",
+        "populacao": "289,875",
+        "cod_municipio_tse": "71498"
+    },
+    {
+        "uf": "SP",
+        "cod_uf": "35",
+        "cod_municipio": "52809",
+        "municipio": "Taboão da Serra",
+        "populacao": "297,528",
+        "cod_municipio_tse": "71579"
+    },
+    {
+        "uf": "SP",
+        "cod_uf": "35",
+        "cod_municipio": "54102",
+        "municipio": "Taubaté",
+        "populacao": "320,820",
+        "cod_municipio_tse": "71838"
+    },
+    {
+        "uf": "MG",
+        "cod_uf": "31",
+        "cod_municipio": "70107",
+        "municipio": "Uberaba",
+        "populacao": "340,277",
+        "cod_municipio_tse": "54011"
+    }
+]
